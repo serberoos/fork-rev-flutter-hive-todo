@@ -18,6 +18,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   final ToggleCompleteTodoUseCase toggleCompleteTodoUseCase;
   final DeleteTodoUseCase deleteTodoUseCase;
   final UndoDeletedTodoUseCase undoDeletedTodoUseCase;
+
   TodoBloc(
       {required this.getAllTodoUseCase,
       required this.addTodoUseCase,
@@ -45,7 +46,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
               description: e.description,
               isCompleted: e.isCompleted))
           .toList();
-      emit(TodoLoadedState(TodoModel(todoList:todoVOList)));
+      emit(TodoLoadedState(TodoModel(todoList: todoVOList)));
     } catch (e) {
       emit(const TodoErrorState());
     }
@@ -63,7 +64,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     }
   }
 
-  void _onItemUpdated(TodoItemUpdatedEvent event, Emitter<TodoState> emit) async {
+  void _onItemUpdated(
+      TodoItemUpdatedEvent event, Emitter<TodoState> emit) async {
     emit(TodoLoadingState());
     try {
       var todoDomain = TodoDomain(event.todo.id, event.todo.title,
@@ -88,7 +90,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     }
   }
 
-  void _onItemDeleted(TodoItemDeletedEvent event, Emitter<TodoState> emit) async {
+  void _onItemDeleted(
+      TodoItemDeletedEvent event, Emitter<TodoState> emit) async {
     emit(TodoLoadingState());
     try {
       deleteTodoUseCase.execute(event.id);

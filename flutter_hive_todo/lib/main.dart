@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
         providers: [
           BlocProvider(
             create: (_) => todoBloc..add(TodoStartedEvent()),
-          )
+          ),
         ],
         child: MaterialApp.router(
           title: 'Hive Todo',
